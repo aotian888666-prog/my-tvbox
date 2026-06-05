@@ -1,0 +1,43 @@
+name: Auto Update TVBox Interface
+
+on:
+  schedule:
+    - cron: '0 20 * * *' # 每天北京时间凌晨4点自动运行
+  workflow_dispatch: # 允许你手动点击按钮立即运行
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-x.version: '3.x'
+
+      - name: Download and Merge Sources
+        run: |
+          # 建立一个 python 脚本直接去抓取合并你想要的影视仓源
+          python -c "
+          import urllib.request
+          urls = ['https://raw.liucn.cc/box/dm.txt', 'https://100km.top/0']
+          content = ''
+          for url in urls:
+              try:
+                  with urllib.request.urlopen(url) as response:
+                      content += response.read().decode('utf-8') + '\n'
+              except Exception as e:
+                  print(f'Error downloading {url}: {e}')
+          with open('index.json', 'w', encoding='utf-8') as f:
+              f.write(content)
+          "
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add index.json
+          git commit -m "Auto updated lines" || exit 0
+          git push
