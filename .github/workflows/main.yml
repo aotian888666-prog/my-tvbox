@@ -3,7 +3,7 @@ name: Auto Update TVBox Interface
 on:
   schedule:
     - cron: '0 20 * * *' # 每天北京时间凌晨4点自动运行
-  workflow_dispatch: # 允许你手动点击按钮立即运行
+  workflow_dispatch: # 允许手动点击运行
 
 jobs:
   update:
@@ -15,18 +15,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-x.version: '3.x'
+          python-version: '3.10'
 
       - name: Download and Merge Sources
         run: |
-          # 建立一个 python 脚本直接去抓取合并你想要的影视仓源
           python -c "
           import urllib.request
           urls = ['https://raw.liucn.cc/box/dm.txt', 'https://100km.top/0']
           content = ''
           for url in urls:
               try:
-                  with urllib.request.urlopen(url) as response:
+                  req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                  with urllib.request.urlopen(req) as response:
                       content += response.read().decode('utf-8') + '\n'
               except Exception as e:
                   print(f'Error downloading {url}: {e}')
