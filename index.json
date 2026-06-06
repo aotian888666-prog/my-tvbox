@@ -1,41 +1,19 @@
-//以下内容为互联网收集，只为自用。
-{ "storeHouse": [ 
+{
+  "spider": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom.jar",
+  "sites": [],
+  "lives": [
     {
-      "sourceName": "🍈自用仓库",
-      "sourceUrl": "http://liucn.cc/box/dc.txt"
+      "name": "天高高清直播",
+      "type": 0,
+      "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt",
+      "playerType": 1
     },
     {
-      "sourceName": "🍎欧歌仓库",
-      "sourceUrl": "https://xn--9ff9-rp5imh.v.nxog.top/nxog/oua.php?b=9f欧歌f9"
-    },
-    {
-      "sourceName": "🥭木鱼仓库",
-      "sourceUrl": "https://d.kstore.dev/download/12020/ck.json"
-    },
-    {
-      "sourceName": "🍍云星仓库",
-      "sourceUrl": "http://itvbox.cc/可视TV/云星日记/仓库/api.json"
-    },
-    {
-      "sourceName": "🍉砂锅仓库",
-      "sourceUrl": "https://agit.ai/ddx/TVBox/raw/branch/master/d.json"
-    },
-    {
-      "sourceName": "🍐吾爱仓库",
-      "sourceUrl": "http://liucn.cc/box/d2.txt"
-    }, 
-   {
-      "sourceName": "🍑天微仓库",
-      "sourceUrl": "https://tvkj.top/DC.txt"
-    },
-   {
-      "sourceName": "🥝多多仓库",
-      "sourceUrl": "http://liucn.cc/bs/d4.txt"
-    },
-    {
-      "sourceName": "☘️雷电/tvbox/dc.txt",
-      "sourceUrl": "clan://localhost/Pictures/tvbox/dc.txt"
+      "name": "范明明超清源(IPv6)",
+      "type": 0,
+      "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
+      "playerType": 1
     }
-
-    ]
+  ],
+  "wallpaper": "https://picsum.photos/1024/768"
 }
