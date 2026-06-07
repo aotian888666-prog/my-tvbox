@@ -1,0 +1,54 @@
+name: Daily Auto Update
+
+# 定义触发条件
+on:
+  schedule:
+    # 遵循 Cron 表达式。注意：GitHub Actions 的时间是 UTC 时间（比北京时间慢 8 小时）
+    # 下面的表达式代表每天北京时间（UTC+8）早上的 08:30 自动运行
+    - cron: '30 0 * * *'
+  # 允许手动在 GitHub 页面上点击按钮触发运行
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    # 授予工作流向您的仓库写入文件的权限
+    permissions:
+      contents: write
+
+    steps:
+    # 1. 检出（下载）仓库代码到运行服务器
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. 部署 Python 环境
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    # 3. 安装脚本可能需要的第三方依赖（如果有的话）
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    # 4. 运行您的数据处理脚本
+    - name: Run script
+      run: python main.py
+
+    # 5. 检查文件是否有变动，如果有，则自动提交并推送到仓库
+    - name: Commit and Push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # 检查是否有文件被修改或新建
+        if [ -n "$(git status --porcelain)" ]; then
+          git add .
+          git commit -m "自动更新: $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        else
+          echo "文件无变化，跳过提交。"
+        fi
